@@ -100,7 +100,7 @@ eaCT_VT100PT = find(iveg_VT100PT > 4);
 eaCT_VT30PT = find(iveg_VT30PT > 4);
 % Fix the negative values
 iveg_VT30EX(eCT_VT30EX) = 0;
-iveg_VT100EX(eCT_VT30EX) = 0;
+iveg_VT100EX(eCT_VT100EX) = 0;
 iveg_VT30PT(eCT_VT30PT) = 0;
 iveg_VT100PT(eCT_VT100PT) = 0;
 % Fix the values above 4
