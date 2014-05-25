@@ -1,0 +1,69 @@
+[System]
+Name='VegCapacityBeaver'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=25
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='RiparianVegPrefCover'
+Range=[0 4]
+NumMFs=5
+MF1='UnsuitableMaterial':'trimf',[0 0 1]
+MF2='BarelySuitableMaterial':'trimf',[0 1 2]
+MF3='ModeratelySuitableMaterial':'trimf',[1 2 3]
+MF4='SuitableMaterial' : 'trimf' , [2 3 4]
+MF5='PreferredMaterial' : 'trimf' , [3 4 4]
+
+[Input2]
+Name='AdjacentVegPrefCover'
+Range=[0 4]
+NumMFs=5
+MF1='UnsuitableMaterial':'trimf',[0 0 1]
+MF2='BarelySuitableMaterial':'trimf',[0 1 2]
+MF3='ModeratelySuitableMaterial':'trimf',[1 2 3]
+MF4='SuitableMaterial' : 'trimf' , [2 3 4]
+MF5='PreferredMaterial' : 'trimf' , [3 4 4]
+
+[Output1]
+Name='BeaverDamsVegCanSupport'
+Range=[0 45]
+NumMFs=5
+MF1='None':'trimf',[0 0 0]
+MF2='Rare':'trapmf',[0 0 0.5 1]
+MF3='Occasional':'trapmf',[0.5 1 4 5]
+MF4='Frequent':'trapmf',[4 5 12 20]
+MF5='Pervasive':'trapmf',[12 20 45 45]
+
+[Rules]
+1 1, 1 (1) : 1
+2 1, 2 (1) : 1
+3 1, 2 (1) : 1
+4 1, 3 (1) : 1
+5 1, 3 (1) : 1
+1 2, 1 (1) : 1
+2 2, 3 (1) : 1
+3 2, 3 (1) : 1
+4 2, 3 (1) : 1
+5 2, 3 (1) : 1
+1 3, 2 (1) : 1
+2 3, 2 (1) : 1
+3 3, 3 (1) : 1
+4 3, 4 (1) : 1
+5 3, 4 (1) : 1
+1 4, 2 (1) : 1
+2 4, 3 (1) : 1
+3 4, 3 (1) : 1
+4 4, 4 (1) : 1
+5 4, 4 (1) : 1
+1 5, 2 (1) : 1
+2 5, 3 (1) : 1
+3 5, 4 (1) : 1
+4 5, 5 (1) : 1
+5 5, 5 (1) : 1
