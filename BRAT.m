@@ -180,7 +180,7 @@ end
 close(h);
 clear b;
 
-% Make sure iHyd_SPLow
+% Make sure SP are not too big
 ecT_iHyd_SPLow = find(iHyd_SPLow > 1000000);
 ecT_iHyd_SP2 = find(iHyd_SP2 > 1000000);
 ecT_iHyd_SP25 = find(iHyd_SP25 > 1000000);
@@ -189,6 +189,14 @@ iHyd_SPLow(ecT_iHyd_SPLow) = 100000;
 iHyd_SP2(ecT_iHyd_SP2) = 100000;
 iHyd_SP25(ecT_iHyd_SP25) = 100000;
 
+% Make sure stream power is not too small
+ecsT_iHyd_SPLow = find(iHyd_SPLow < 0);
+ecsT_iHyd_SP2 = find(iHyd_SP2 < 0);
+ecsT_iHyd_SP25 = find(iHyd_SP25 < 0);
+% Fix as needed
+iHyd_SPLow(ecsT_iHyd_SPLow) = 0.001;
+iHyd_SP2(ecsT_iHyd_SP2) = 0.001;
+iHyd_SP25(ecsT_iHyd_SP25) = 0.001;
 
 %% POTENTIAL CONFLICT INPUTS
 iPC_UDotX = data(:,12);
