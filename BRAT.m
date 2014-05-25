@@ -15,8 +15,46 @@
 % 
 %
 % This script uses a series of fuzzy inference systems to estimate the capacity
-% of the landscape to support dam building activity by beaver. 
+% of the landscape to support dam building activity by beaver. It also runs
+% a conflcit potential (probablity) model (optionally) and a
+% conservation/restoration management model. 
 %
+% The model requires a *.csv file to run with following collumns:
+% 1: iGeo_ElMin	 Minimum Segment Elevation - Extracted from 10m NED DEM [meters ABMS]
+% 2: iGeo_ElMax  Maximum Segment Elevation - Extracted from 10m NED DEM  [meters ABMS]
+% 3: iGeo_ElBeg	 Elevation at Segment Beginning- Extracted from 10m NED DEM  [meters ABMS]
+% 4: iGeo_ElEnd	 Elevation at Segment End - Extracted from 10m NED DEM [meters ABMS]
+% 5: iGeo_Length  Segment Length  - Derived from NHD 24K geometry; typically 250 m [meters]	
+% 6: iGeo_Slope	  Segment Slope - Derived from elevations and segment length [percent slope - dimensionless]
+% 7: iveg_VT100EX Existing Vegetation Type Beaver Suitability Adjacent to Stream - Classified from existing LANDFIRE as Beaver Vegetation Suitability using Zonal Stat Average within 100 m buffer [Suitability Value between 0 & 4]	
+% 8: iveg_VT30EX  Existing Vegetation Type Beaver Suitability Near Stream
+% 9: iveg_VT100PT	Potential Vegetation Type Beaver Suitability Adjacent to Stream
+% 10: iveg_VT30PT  	Potential Vegetation Type Beaver Suitability Near Stream
+% 11: iGeo_DA	 Upslope Drainage Area - SqMi - Derived from flow accumulation calculated on 10m NHD DEM [square miles]
+% 12: iPC_UDotX	 Distance to UDoT Crossing - Euclidian distance to nearest UDoT road crossing [meters]
+% 13: iPC_RoadX	  Distance to Road Crossing - Euclidian distance to nearest road crossing  [meters]
+% 14: IPC_RoadAdj	Distance to Road - Euclidian distance to nearest Road  [meters]
+% 15: IPC_RR	 Distance to Railroad - Euclidian distance to nearest Railroad  [meters]
+% 16: IPC_Canal  Distance to Canal - Euclidian distance to nearest Canal  [meters]
+
+% The model outputs the above inputs as well as:
+% iHyd_QLow - iHyd: Low Flow - CFS - Estimated by USGS Regional Curves [cfs]
+% iHyd_Q2 - iHyd: 2 Year RI Flow - CFS - Estimated by USGS Regional Curves [cfs]
+% iHyd_Q25 - iHyd: 25 Year RI Flow - CFS - Estimated by USGS Regional Curves [cfs]
+% iHyd_SPLow - iHyd: Low Flow Stream Power - Calculated by Slope & Q estimate [Watts]
+% iHyd_SP2 - iHyd: 2 Year RI Stream Power- Calculated by Slope & Q estimate [Watts]
+% iHyd_SP25 - iHyd: 25 Year RI Stream Power - Calculated by Slope & Q estimate [Watts]
+% oVC_EX - oVC: Modeled Vegetation Existing Beaver Dam Capacity Density - FIS modelled output of beaver dam density based only on existing vegetation [dams/km]
+% oVC_PT - oVC: Modeled Vegetation Potential Beaver Dam Capacity Density - FIS modelled output of beaver dam density based only on potential vegetation [dams/km]
+% oCC_EX - oDC: Modeled Combined Existing Beaver Dam Capacity Density - Final FIS modelled output of existing beaver dam density based only on all combined inputs [dams/km]
+% oCC_PT - oCC: Modeled Combined Potential Beaver Dam Capacity Density - Final FIS modelled output of potential beaver dam density based only on all combined inputs [dams/km]
+% mCC_EX_Ct - mCC: Existing Capacity Dam Count - Product of oCC_EX and Segment length [dams]
+% mCC_PT_Ct - mCC: Potential Capacity Dam Count - Product of oCC_PT and Segment length [dams]
+% mCC_EX-PT - mCC: Existing to Potential Capacity Ratio - Ratio of actual to potential dam densities [dimensionless ratio between 0 and 1]
+% e_DamCt - Empirical: Actual Dam Count - These are the adjusted flow types by FHC [dams: optionally NA]
+% e_DamDens - Empirical: Actual Dam Density - These are the adjusted flow types by FHC [dams/km; Optionally NA]
+% e_DamPcC - Empirical: Actual Percent of Existing Capacity Ratio - A ratio comparing actual dam count to capacity estimate for segment  [ratio between 0 & 1; Optionally NA]
+% oPC_Prob - oPC: Potential for Beaver Conflict Probability - These are the adjusted flow types by FHC [Probability]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
