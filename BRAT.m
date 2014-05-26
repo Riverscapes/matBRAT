@@ -295,9 +295,13 @@ mCC_EXtoPT = zeros(length(data),1);
 % Add a status bar, while running model
 h = waitbar(0,'Calculating Metrics...');
 for k = 1:(length(data))
-    mCC_EX_Ct(k) = iGeo_Length(k)*oCC_EX(k);  %  Existing Capacity Dam Count - Product of oCC_EX and Segment length [dams]
-    mCC_PT_Ct(k) = iGeo_Length(k)*oCC_PT(k);  %  Potential Capacity Dam Count - Product of oCC_PT and Segment length [dams]
-    mCC_EXtoPT(k) = mCC_EX_Ct(k)/mCC_EXtoPT(k);
+    mCC_EX_Ct(k) = ((iGeo_Length(k))/1000)*oCC_EX(k);  %  Existing Capacity Dam Count - Product of oCC_EX and Segment length [dams]
+    mCC_PT_Ct(k) = ((iGeo_Length(k))/1000)*oCC_PT(k);  %  Potential Capacity Dam Count - Product of oCC_PT and Segment length [dams]
+    if mCC_EX_Ct(k) > 0
+        mCC_EXtoPT(k) = mCC_EX_Ct(k)/mCC_PT_Ct(k);
+    else
+        mCC_EXtoPT(k) = 0;
+    end
     waitbar(k/(length(data)))
 end
 close(h)
