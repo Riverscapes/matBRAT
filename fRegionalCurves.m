@@ -59,10 +59,10 @@ try
         Q2= 10.2*((UpstreamArea)^(0.611));
         Q25= 29.9*((UpstreamArea)^(0.644));
     else
-        error('Unsported region number specified.');  
+        error('Unspported region number specified.');  
     end
     return
 catch err
-   error('Unsported region number specified.');  
+   error('Unspported region number specified.');  
 end
 
