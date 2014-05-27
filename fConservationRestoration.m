@@ -35,7 +35,7 @@ HighConflict = 0.75; % The high conflict probablity threshold
 
 if oCC_EX == 0 % Deal with the existing None capacity areas first
     % Either going to be Unsuitable (Anthropogenic or Natural) or Long-Term
-    % Possiblity. What differntiates it is basically potential and
+    % Possiblity. What differentiates it is basically potential and
     % probability of conflict.
     if oCC_PT > 5 % i.e. Potential is > 5 dams/km
         if oPC_Prob < LowConflict 
@@ -101,7 +101,7 @@ elseif oCC_EX > 5 && oCC_EX <=15 % The existing Frequent Capacity Areas
         elseif oPC_Prob > HighConflict % Interm
             fCR = 'Unsuitable: Anthropogenically Limited';
         end
-    elseif oCC_PT <= 15 % Or not so great potential improvment
+    elseif oCC_PT <= 15 % Or not so great potential improvement
          if oPC_Prob <= HighConflict % 25% Low conflict potential
                 fCR = 'Low Hanging Fruit - Potential Restoration/Conservation Zone';
         elseif oPC_Prob >  HighConflict 
