@@ -19,19 +19,19 @@ function [oPC_Prob] = fConflictPotential(iPC_UDotX,iPC_RoadX,iPCRoadAdj,iPC_RR, 
 
 %% Check for bad inputs
 if iPC_UDotX < 0
-    iPC_UDotX = 0
+    iPC_UDotX = 10000;
 end
-if iPC_RoadX < 0
-    iPC_RoadX = 0
+if iPC_RoadX <= 0
+    iPC_RoadX = 10000;
 end
 if iPCRoadAdj < 0
-    iPCRoadAdj = 0
+    iPCRoadAdj = 10000;
 end
 if iPC_RR < 0
-    iPC_RR = 0
+    iPC_RR = 10000;
 end
 if iPC_Canal < 0
-    iPC_Canal = 0
+    iPC_Canal = 10000;
 end
 
 
