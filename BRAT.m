@@ -16,7 +16,7 @@
 %
 % This script uses a series of fuzzy inference systems to estimate the capacity
 % of the landscape to support dam building activity by beaver. It also runs
-% a conflcit potential (probablity) model (optionally) and a
+% a conflcit potential (probablity) model (optionally)a
 % conservation/restoration management model. 
 %
 % The model requires a *.csv file to run with following collumns:
@@ -31,8 +31,8 @@
 % 9: iveg_VT100PT	Potential Vegetation Type Beaver Suitability Adjacent to Stream
 % 10: iveg_VT30PT  	Potential Vegetation Type Beaver Suitability Near Stream
 % 11: iGeo_DA	 Upslope Drainage Area - SqMi - Derived from flow accumulation calculated on 10m NHD DEM [square miles]
-% 12: iPC_UDotX	 Distance to UDoT Crossing - Euclidian distance to nearest UDoT road crossing [meters]
-% 13: iPC_RoadX	  Distance to Road Crossing - Euclidian distance to nearest road crossing  [meters]
+% 12: iPC_UDotX	 Distance to UDoT Culvert - Euclidian distance to nearest UDoT Culvert [meters]
+% 13: iPC_RoadX	  Distance to Road Crossing - Euclidian distance to nearest road crossing excluding UDot Culverts [meters]
 % 14: IPC_RoadAdj	Distance to Road - Euclidian distance to nearest Road  [meters]
 % 15: IPC_RR	 Distance to Railroad - Euclidian distance to nearest Railroad  [meters]
 % 16: IPC_Canal  Distance to Canal - Euclidian distance to nearest Canal  [meters]
@@ -46,8 +46,8 @@
 % iHyd_SP25 - iHyd: 25 Year RI Stream Power - Calculated by Slope & Q estimate [Watts]
 % oVC_EX - oVC: Modeled Vegetation Existing Beaver Dam Capacity Density - FIS modelled output of beaver dam density based only on existing vegetation [dams/km]
 % oVC_PT - oVC: Modeled Vegetation Potential Beaver Dam Capacity Density - FIS modelled output of beaver dam density based only on potential vegetation [dams/km]
-% oCC_EX - oDC: Modeled Combined Existing Beaver Dam Capacity Density - Final FIS modelled output of existing beaver dam density based only on all combined inputs [dams/km]
-% oCC_PT - oCC: Modeled Combined Potential Beaver Dam Capacity Density - Final FIS modelled output of potential beaver dam density based only on all combined inputs [dams/km]
+% oCC_EX - oDC: Modeled Combined Existing Beaver Dam Capacity Density - Final FIS modelled output of existing beaver dam density based on all combined inputs [dams/km]
+% oCC_PT - oCC: Modeled Combined Potential Beaver Dam Capacity Density - Final FIS modelled output of potential beaver dam density based on all combined inputs [dams/km]
 % mCC_EX_Ct - mCC: Existing Capacity Dam Count - Product of oCC_EX and Segment length [dams]
 % mCC_PT_Ct - mCC: Potential Capacity Dam Count - Product of oCC_PT and Segment length [dams]
 % mCC_EX-PT - mCC: Existing to Potential Capacity Ratio - Ratio of actual to potential dam densities [dimensionless ratio between 0 and 1]
@@ -174,13 +174,13 @@ for b=1:length(data);
     %  Flow (CFS) is converted to CMS by multiplying by 0.028316846592
     iHyd_SPLow(b) = (1000*9.80665)*iGeo_Slope(b)*(iHyd_QLow(b)*0.028316846592);  % iHyd_QLow - (Watts = (Density - 1000kg /cubic meter * Gravity 9.8m /squared second)* iGeo_Slope(m) * (cms)
     iHyd_SP2(b) = (1000*9.80665)*iGeo_Slope(b)*(iHyd_Q2(b)*0.028316846592);  % iHyd_Q2
-    iHyd_SP25(b) = (1000*9.80665)*iGeo_Slope(b)*(iHyd_Q25(b)*0.02316846592);  % iHyd_Q25
+    iHyd_SP25(b) = (1000*9.80665)*iGeo_Slope(b)*(iHyd_Q25(b)*0.028316846592);  % iHyd_Q25
     waitbar(b/(length(data)))
 end
 close(h);
 clear b;
 
-% Make sure SP are not too big
+% Make sure Stream Power are not too big
 ecT_iHyd_SPLow = find(iHyd_SPLow > 1000000);
 ecT_iHyd_SP2 = find(iHyd_SP2 > 1000000);
 ecT_iHyd_SP25 = find(iHyd_SP25 > 1000000);
@@ -232,7 +232,9 @@ for b=1:length(data);
        oCC_EX(b)= fBeavCapacityComb(oVC_EX(b), iHyd_SP2(b), iHyd_SPLow(b), iGeo_Slope(b)); % Run for Existing
        oCC_PT(b)= fBeavCapacityComb(oVC_PT(b), iHyd_SP2(b), iHyd_SPLow(b), iGeo_Slope(b)); % Run for Potential
    % Manual Adjustments
-   % Prevents output CC from having higher value than VC
+   % Prevents output combined capacity from having higher value than Veg
+   % Capacity
+ 
    if oCC_EX(b) > oVC_EX(b);
        oCC_EX(b) = oVC_EX(b);
    end
