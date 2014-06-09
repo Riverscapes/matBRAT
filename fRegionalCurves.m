@@ -31,8 +31,8 @@ try
          Q25= (19.7*(UpstreamArea)^(0.547))*((1.21)^(7.07969));
     elseif(regionID == '2') % Utah Region 2
          QP80 = (6.726*10^(-37))*((UpstreamArea)^0.6244)*(5707.02^9.3200);
-         Q2= 0.585*(UpstreamArea)^0.847*(1.07^22.23);
-         Q25= (4*(UpstreamArea)^(0.661))*1.06^(22.23);
+         Q2= 0.585*(UpstreamArea)^0.847*(1.07^40.0);
+         Q25= (4*(UpstreamArea)^(0.661))*1.06^(40.0);
     elseif(regionID == '3')  % Utah Region 3
          QP80 = 0.012712*((UpstreamArea)^0.8789)*(10^(0.0539*11.71)); 
          Q2= 14.5*(UpstreamArea)^0.328;
