@@ -43,9 +43,9 @@ Name='ReachSlopePct'
 Range=[0 1]
 NumMFs=4
 MF1='ReallyFlat':'trapmf',[0 0 0.0002 .005]
-MF2='CanBuildDam':'trapmf',[0.0002 .005 0.10 0.12]
-MF3='ProbablyCanBuildDam':'trapmf',[0.10 0.12 0.15 0.23]
-MF4='CanNotBuildDam':'trapmf',[0.15 0.23 1 1]
+MF2='CanBuildDam':'trapmf',[0.0002 .005 0.12 0.15]
+MF3='ProbablyCanBuildDam':'trapmf',[0.12 0.15 0.17 0.23]
+MF4='CanNotBuildDam':'trapmf',[0.17 0.23 1 1]
 
 [Output1]
 Name='MaxBeaverDamDensity'
