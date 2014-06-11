@@ -66,7 +66,7 @@ end
 if iPCRoadAdj >= 0 && iPCRoadAdj <= AdjLow
     RoadAdj_Prob = 0.9; % Assign high probability when crossing in reach
 elseif iPCRoadAdj > AdjLow && iPCRoadAdj <= AdjHigh
-    RoadAdj_Prob = -0.00137*iPCRoadAdj + 1.0369; % Assign high probability when crossing in reach
+    RoadAdj_Prob = -0.0100933333333*iPCRoadAdj + 1.00933333333; % Assign high probability when crossing in reach
 elseif iPCRoadAdj > AdjHigh
     RoadAdj_Prob = 0.01; % Assign high probability when crossing in reach
 else
