@@ -45,7 +45,7 @@ if oCC_EX == 0 % Deal with the existing None capacity areas first
         end
        
     else % Now figure out whether anthropogenic or naturally limiting
-        if oVC_PT > 1 % If the vegetation potential was good enough to support some activty
+        if oCC_PT > 1 % If the vegetation potential was good enough to support some activty
             fCR = 'Unsuitable: Anthropogenically Limited';
         else
             fCR = 'Unsuitable: Naturally Limited';
