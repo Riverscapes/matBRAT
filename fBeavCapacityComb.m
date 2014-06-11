@@ -15,6 +15,7 @@
 % This function outputs a dam density in dams/km based on
 % vegetation within a 30 m buffer and vegetation within a 100 m buffer
 % The vegetation scores are from 0 to 4
+% NOTE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [oCC] = fBeavCapacityComb(oVC,iHyd_SP2,iHyd_SPLow,iGeo_Slope)
 
