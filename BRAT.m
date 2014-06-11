@@ -224,9 +224,10 @@ clear b;
 
 fprintf('Done running vegetation FIS...\n')
 %% BEAVER COMBINED FIS
-
+fprintf('Estimating capacity estimates based on combined FIS...\n')
  oCC_EX = zeros(length(data),1);
  oCC_PT = zeros(length(data),1);
+
 
 h = waitbar(0,'Running combined capacity FIS Model...');
 for b=1:length(data);    
@@ -243,15 +244,29 @@ for b=1:length(data);
        oCC_PT(b) = oVC_PT(b);
    end
 
-   if iGeo_DA(b) > 3860; %Max Drainage Area (sq. mi.) for beaver presence
+   if iGeo_DA(b) > 1800; %Max Drainage Area (sq. mi.) for beaver dam presence
        oCC_EX(b) = 0;
        oCC_PT(b) = 0;
-   end 
-   waitbar(b/(length(data)))
-end
+   end    
+   
+   % Headwater Fix 
+    if oCC_EX(b) >1 && oCC_EX(b)<5 %if existing capacity occasional 
+        if iHyd_SP2(b)<250 %if stream power low
+            oCC_EX(b) = oCC_EX(b)+10; %Bump occasional to frequent
+        end
+    end
+    if oCC_PT(b) >1 && oCC_PT(b)<5 %if potential capacity occasional 
+        if iHyd_SP2(b)<250 %if stream power low
+            oCC_PT(b) = oCC_PT(b)+10; %Bump occasional to frequent
+        end
+    end
+    waitbar(b/(length(data)))
+ end
 close(h);
-clear b;
+clear b;      
+ 
 fprintf('Done running combined Beaver Capacity FIS...\n')
+
 %% POTENTIAL CONFLICT FIS
 oPC_Prob = zeros(length(data),1);
 
@@ -261,13 +276,12 @@ if strcmp(conflictButton,'Yes')
     % Add a status bar, while running model
     h = waitbar(0,'Running Potential Conflict Model...');
     for b=1:length(data);
-        oPC_Prob(b) = fConflictPotential(iPC_UDotX(b),iPC_RoadX(b),iPC_Canal(b),iPC_RR(b),iPC_RoadAdj(b));
+        oPC_Prob(b) = fConflictPotential(iPC_UDotX(b),iPC_RoadX(b),iPC_RoadAdj(b),iPC_Canal(b),iPC_RR(b));
         waitbar(b/(length(data)))
     end
     close(h);
     clear b;
 end
-
 
 %% Potential Beaver Restoration and Conservation
 
@@ -321,7 +335,7 @@ h = waitbar(0,'Writing output to disc...');
 % counter to FIDStart =1
 FIDstart = 0;
 for j=1:(length(oCC_EX));                                                      
-    fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j),mCC_PT_Ct(j),mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j), oPC_Prob(j), char(oPBRC(j)));
+    fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j), mCC_PT_Ct(j), mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j), oPC_Prob(j), char(oPBRC(j)));
     waitbar(j/(length(oCC_EX)))
     FIDstart = FIDstart +1;
 end
