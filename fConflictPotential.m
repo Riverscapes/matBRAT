@@ -15,7 +15,7 @@
 % This function outputs a probablity of conflict potential
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [oPC_Prob] = fConflictPotential(iPC_UDotX,iPC_RoadX,iPCRoadAdj,iPC_RR, iPC_Canal)
+function [oPC_Prob] = fConflictPotential(iPC_UDotX,iPC_RoadX,iPCRoadAdj,iPC_RR, iPC_Canal,iPC_LU,iPC_Own)
 
 %% Check for bad inputs
 if iPC_UDotX < 0
