@@ -205,8 +205,8 @@ iPC_RoadX = data(:,13);
 iPC_RoadAdj = data(:,14);
 iPC_RR = data(:,15);
 iPC_Canal = data(:,16);
-% iPC_LU = data(:,15);
-% iPC_Own = data(:,16);
+iPC_LU = data(:,17);
+iPC_Own = data(:,18);
 
 %% BEAVER VEG CAPACITY FIS
 fprintf('Estimating capacity estimates based on vegetation FIS...\n')
