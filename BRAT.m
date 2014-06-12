@@ -332,14 +332,14 @@ clear k;
 %------Write the BRAT Results to an CSV file format-----
 
 fid3 = fopen(outfilename, 'w');    %create output file to write to
-fprintf(fid3, 'FID,iGeo_ElMin,iGeo_ElMax,iGeo_ElBeg,iGeo_ElEnd,iGeo_Length,iGeo_Slope,iveg_VT100EX,iveg_VT30EX,iveg_VT100PT,iveg_VT30PT,iGeo_DA,iHyd_QLow,iHyd_Q2,iHyd_Q25,iHyd_SPLow,iHyd_SP2,iHyd_SP25,oVC_EX,oVC_PT,oCC_EX,oCC_PT,mCC_EX_Ct,mCC_PT_Ct,mCC_EXtoPT,iPC_UDotX,iPC_RoadX,iPC_RoadAdj,iPC_RR,iPC_Canal,oPC_Prob,oPBRC\n'); % write header
+fprintf(fid3, 'FID,iGeo_ElMin,iGeo_ElMax,iGeo_ElBeg,iGeo_ElEnd,iGeo_Length,iGeo_Slope,iveg_VT100EX,iveg_VT30EX,iveg_VT100PT,iveg_VT30PT,iGeo_DA,iHyd_QLow,iHyd_Q2,iHyd_Q25,iHyd_SPLow,iHyd_SP2,iHyd_SP25,oVC_EX,oVC_PT,oCC_EX,oCC_PT,mCC_EX_Ct,mCC_PT_Ct,mCC_EXtoPT,iPC_UDotX,iPC_RoadX,iPC_RoadAdj,iPC_RR,iPC_Canal,iPC_LU,iPC_Own,oPC_Prob,oPBRC\n'); % write header
 % write out data
 h = waitbar(0,'Writing output to disc...');
 % Make sure first FID is 0 and they progress sequentially! Otherwise change
 % counter to FIDStart =1
 FIDstart = 0;
 for j=1:(length(oCC_EX));                                                      
-    fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j), mCC_PT_Ct(j), mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j), oPC_Prob(j), char(oPBRC(j)));
+    fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j), mCC_PT_Ct(j), mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j),iPC_LU(j),iPC_Own(j), oPC_Prob(j), char(oPBRC(j)));
     waitbar(j/(length(oCC_EX)))
     FIDstart = FIDstart +1;
 end
