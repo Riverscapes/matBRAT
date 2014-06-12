@@ -280,7 +280,7 @@ if strcmp(conflictButton,'Yes')
     % Add a status bar, while running model
     h = waitbar(0,'Running Potential Conflict Model...');
     for b=1:length(data);
-        oPC_Prob(b) = fConflictPotential(iPC_UDotX(b),iPC_RoadX(b),iPC_RoadAdj(b),iPC_Canal(b),iPC_RR(b));
+        oPC_Prob(b) = fConflictPotential(iPC_UDotX(b),iPC_RoadX(b),iPC_RoadAdj(b),iPC_Canal(b),iPC_RR(b), iPC_LU(b), iPC_Own(b));
         waitbar(b/(length(data)))
     end
     close(h);
