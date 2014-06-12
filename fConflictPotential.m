@@ -83,9 +83,9 @@ end
 if iPC_Canal >= 0 && iPC_Canal <= AdjLow
     Canal_Prob = 0.9; % Assign high probability when crossing in reach
 elseif iPC_Canal > AdjLow && iPC_Canal <= AdjHigh
-    Canal_Prob = -0.00137*iPC_Canal + 1.0369; % Assign high probability when crossing in reach
+    Canal_Prob = -0.0018*iPC_Canal + 0.94; % Use formula to calculate probability
 elseif iPC_Canal > AdjHigh
-    Canal_Prob = 0.01; % Assign high probability when crossing in reach
+    Canal_Prob = 0.01; % Assign low probability when canal is far from reach
 else
     Canal_Prob = 0.01; % Assign very low probability otherwise
 end
