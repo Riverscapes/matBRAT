@@ -94,17 +94,44 @@ end
 if iPC_RR >= 0 && iPC_RR <= AdjLow
     RR_Prob = 0.9; % Assign high probability when crossing in reach
 elseif iPC_RR > AdjLow && iPC_RR <= AdjHigh
-    RR_Prob = -0.00137*iPC_RR + 1.0369; % Assign high probability when crossing in reach
+    RR_Prob = -0.0100933333333*iPC_RR + 1.00933333333; % Use formula to calculate probability
 elseif iPC_RR > AdjHigh
-    RR_Prob = 0.01; % Assign high probability when crossing in reach
+    RR_Prob = 0.01; % Assign low probability when RR is far from reach
 else
     RR_Prob = 0.01; % Assign very low probability otherwise
 end
 
+% Water Related Land Use
+if iPC_LU == 3
+    LU_Prob = 0.75; % Assign high probability when land use is Urban
+elseif  iPC_LU == 2; 
+    LU_Prob = 0.50; % Assign moderate probability when land use is Agriculture or Rural
+elseif iPC_LU <= 1
+    LU_Prob = 0.01; % Assign low probability when land use is riparian or N/A
+else
+    LU_Prob = 0.01; % Assign very low probability otherwise
+end
+
+% Land Ownership
+
+if iPC_Own == 3
+    Own_Prob = 0.5; % Assign high probability when land ownership is Private
+elseif  iPC_Own == 2; 
+    Own_Prob = 0.01; % Assign low probability when land ownership is Federal or State 
+elseif iPC_Own == 1; % Assign low probability if the land has a conservation emphasis 
+    Own_Prob = 0.01;
+else
+    Own_Prob = 0.01; % Assign very low probability otherwise
+end
+
 %% Combine probability
-ProbArray = [UDotX_Prob RoadX_Prob RoadAdj_Prob RR_Prob Canal_Prob];
+ProbArray = [UDotX_Prob RoadX_Prob RoadAdj_Prob RR_Prob Canal_Prob LU_Prob Own_Prob];
 
 oPC_Prob = max(ProbArray); % Just let worst probabilty drive model
+
+if iPC_Own ==1
+    oPC_Prob = 0.01;% Override all other probabilities if the land ownership has a conservation emphasis
+end
     
 return
 
