@@ -119,6 +119,12 @@ iGeo_DA = data(:,11);
 % Convert from km2 to mi2
 iGeo_DA = 0.3861021585424458*iGeo_DA;
 
+%% Dam COUNT INPUT (OPTIONAL)
+if length(data(:,18))> 0
+    e_DamCt = data(:,18);
+else
+    e_DamCt = NaN;
+end
 
 %% VEG INPUTS
 iveg_VT100EX = data(:,7);% Existing Vegeation in 100 m buffer
