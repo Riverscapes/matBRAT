@@ -333,6 +333,9 @@ for k = 1:(length(data))
     else
         mCC_EXtoPT(k) = 0;
     end
+%     if e_DamCt ~= NaN
+%     % calcualte other metrics
+%     end
     waitbar(k/(length(data)))
 end
 close(h)
