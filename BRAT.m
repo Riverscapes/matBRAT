@@ -319,6 +319,10 @@ clear i;
 mCC_EX_Ct = zeros(length(data),1);
 mCC_PT_Ct = zeros(length(data),1);
 mCC_EXtoPT = zeros(length(data),1);
+% if e_DamCt ~= NaN
+%     % Initialize other metrics
+% end
+
 % Add a status bar, while running model
 h = waitbar(0,'Calculating Metrics...');
 for k = 1:(length(data))
