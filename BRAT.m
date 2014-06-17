@@ -209,10 +209,19 @@ iPC_LU = data(:,17);
 iPC_Own = data(:,18);
 
 %% Dam COUNT INPUT (OPTIONAL)
-if length(data(:,19))~= NaN 
-    e_DamCt = data(:,19);
+temp = size(data);
+cols = temp(2);
+if cols == 18
+    boolDamCapOut = 0;
+    fprintf('No Dam Capacity; %f column in dataset\n', (cols));
 else
-    e_DamCt = NaN;
+    boolDamCapOut = 1;
+    fprintf('Dam Capacity; %f columns in dataset\n', (cols));
+        
+end
+
+if boolDamCapOut
+   e_DamCt = data(:,19);
 end
 
 %% BEAVER VEG CAPACITY FIS
