@@ -322,7 +322,8 @@ mCC_EX_Ct = zeros(length(data),1);
 mCC_PT_Ct = zeros(length(data),1);
 mCC_EXtoPT = zeros(length(data),1);
 
-if e_DamCt ~= isNaN
+if e_DamCt == NaN
+else
    e_DamDens = zeros(length(data),1);
      e_DamPcC = zeros(length(data),1);
 end
