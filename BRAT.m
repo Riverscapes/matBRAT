@@ -27,8 +27,7 @@
 % 5: iGeo_Length  Segment Length  - Derived from NHD 24K geometry; typically 250 m [meters]	
 % 6: iGeo_Slope	  Segment Slope - Derived from elevations and segment length [percent slope - dimensionless]
 % 7: iveg_VT100EX Existing Vegetation Type Beaver Suitability Adjacent to Stream - Classified from existing LANDFIRE as Beaver Vegetation Suitability using Zonal Stat Average within 100 m buffer [Suitability Value between 0 & 4]	
-% 8: iveg_VT30EX  Existing Vegetation Type Beaver Suitability Near Stream
-% (Riparian)
+% 8: iveg_VT30EX  Existing Vegetation Type Beaver Suitability Near Stream(Riparian)
 % 9: iveg_VT100PT	Potential Vegetation Type Beaver Suitability Adjacent to Stream
 % 10: iveg_VT30PT  	Potential Vegetation Type Beaver Suitability Near Stream
 % 11: iGeo_DA	 Upslope Drainage Area - SqMi - Derived from flow accumulation calculated on 10m NHD DEM [square miles]
