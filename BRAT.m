@@ -352,7 +352,7 @@ clear k;
 
 fid3 = fopen(outfilename, 'w');    %create output file to write to
 
-if e_DamCt ~= ISNaN
+if e_DamCt ~= NaN
     fprintf(fid3, 'FID,iGeo_ElMin,iGeo_ElMax,iGeo_ElBeg,iGeo_ElEnd,iGeo_Length,iGeo_Slope,iveg_VT100EX,iveg_VT30EX,iveg_VT100PT,iveg_VT30PT,iGeo_DA,iHyd_QLow,iHyd_Q2,iHyd_Q25,iHyd_SPLow,iHyd_SP2,iHyd_SP25,oVC_EX,oVC_PT,oCC_EX,oCC_PT,mCC_EX_Ct,mCC_PT_Ct,mCC_EXtoPT,iPC_UDotX,iPC_RoadX,iPC_RoadAdj,iPC_RR,iPC_Canal,iPC_LU,iPC_Own,oPC_Prob,oPBRC,e_DamCt,e_DamDens,e_DamPcC\n'); % write header
 else
    fprintf(fid3, 'FID,iGeo_ElMin,iGeo_ElMax,iGeo_ElBeg,iGeo_ElEnd,iGeo_Length,iGeo_Slope,iveg_VT100EX,iveg_VT30EX,iveg_VT100PT,iveg_VT30PT,iGeo_DA,iHyd_QLow,iHyd_Q2,iHyd_Q25,iHyd_SPLow,iHyd_SP2,iHyd_SP25,oVC_EX,oVC_PT,oCC_EX,oCC_PT,mCC_EX_Ct,mCC_PT_Ct,mCC_EXtoPT,iPC_UDotX,iPC_RoadX,iPC_RoadAdj,iPC_RR,iPC_Canal,iPC_LU,iPC_Own,oPC_Prob,oPBRC\n'); % write header
