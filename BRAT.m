@@ -371,7 +371,7 @@ h = waitbar(0,'Writing output to disc...');
 % counter to FIDStart =1
 FIDstart = 0;
 for j=1:(length(oCC_EX));                                                      
-    if boolDamCapOut
+    if boolDamCount
         fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s,%f,%f,%f\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j), mCC_PT_Ct(j), mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j),iPC_LU(j),iPC_Own(j), oPC_Prob(j),char(oPBRC(j)), e_DamCt(j),e_DamDens(j),e_DamPcC(j));
     else 
         fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j), mCC_PT_Ct(j), mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j),iPC_LU(j),iPC_Own(j), oPC_Prob(j), char(oPBRC(j))); 
