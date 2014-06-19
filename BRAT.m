@@ -330,8 +330,8 @@ mCC_EX_Ct = zeros(length(data),1);
 mCC_PT_Ct = zeros(length(data),1);
 mCC_EXtoPT = zeros(length(data),1);
 
-if boolDamCapOut
-    e_DamDens = zeros(length(data),1);
+if boolDamCount
+    e_DamDens = zeros(length(data),1); % if Dam Count data is included in the data, add these columns
     e_DamPcC = zeros(length(data),1);
 end
    
