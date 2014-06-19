@@ -333,6 +333,7 @@ mCC_EXtoPT = zeros(length(data),1);
 if boolDamCount
     e_DamDens = zeros(length(data),1); % if Dam Count data is included in the data, add these columns
     e_DamPcC = zeros(length(data),1);
+    oVC_DamPcC = zeros(length(data),1);
 end
    
 
@@ -349,6 +350,7 @@ for k = 1:(length(data))
     if boolDamCount
        e_DamDens (k) = e_DamCt (k)/((iGeo_Length(k))/1000); % a metric of the existing dams/km
        e_DamPcC (k) = e_DamCt(k)/oCC_EX(k); % a metric of the existing dam count divided by the exiting capacity - output is a probability between 0 and 1
+       oVC_DamPcC (k) = e_DamCt(k)/oVC_EX(k);% a metric comparing the vegetation capacity to the dam count - probability between 0 and 1
     end
     waitbar(k/(length(data)))
 end
