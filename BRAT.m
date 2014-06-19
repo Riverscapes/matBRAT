@@ -346,7 +346,7 @@ for k = 1:(length(data))
     else
         mCC_EXtoPT(k) = 0;
     end
-    if boolDamCapOut
+    if boolDamCount
        e_DamDens (k) = e_DamCt (k)/((iGeo_Length(k))/1000); % a metric of the existing dams/km
        e_DamPcC (k) = e_DamCt(k)/oCC_EX(k); % a metric of the existing dam count divided by the exiting capacity - output is a probability between 0 and 1
     end
