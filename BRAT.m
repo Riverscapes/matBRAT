@@ -212,15 +212,15 @@ iPC_Own = data(:,18);
 temp = size(data);
 cols = temp(2);
 if cols == 18
-    boolDamCapOut = 0;
+    boolDamCount = 0;
     fprintf('No Dam Capacity; %f column in dataset\n', (cols));
 else
-    boolDamCapOut = 1;
+    boolDamCount = 1;
     fprintf('Dam Capacity; %f columns in dataset\n', (cols));
         
 end
 
-if boolDamCapOut
+if boolDamCount
    e_DamCt = data(:,19);
 end
 
