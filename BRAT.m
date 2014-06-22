@@ -263,7 +263,7 @@ for b=1:length(data);
    if char(regionButton) == '6' && iGeo_DA(b) > 3860 ; %Max Drainage Area (sq. mi.) for beaver dam presence in Region 6
        oCC_EX(b) = 0;
        oCC_PT(b) = 0;
-   elseif iGeo_DA(b) > 1800; %Max Drainage Area (sq. mi.) for beaver dam presence in all other Regions
+   elseif iGeo_DA(b) > 3860; %Max Drainage Area (sq. mi.) for beaver dam presence in all other Regions
        oCC_EX(b) = 0;
        oCC_PT(b) = 0;
    end
