@@ -45,10 +45,10 @@ try
          QP80 = 0.012712*((UpstreamArea)^(0.8789))*(10^(0.0539*19.42));
          Q2= 4.32*((UpstreamArea)^(0.623))*(4^(0.503));
          Q25= (28.8*(UpstreamArea)^(0.538))*((4)^(0.352));
-    elseif(regionID == '6')  % Utah Region 6
+    elseif(regionID == '6')  % Utah Region 6 (8000 was used instead of 6182.81 to decrease stream power to reflect on-the-ground conditions)
          QP80 = 0.27139*((UpstreamArea)^(0.5124));
-         Q2= 4150*((UpstreamArea)^(0.553))*((6182.81/1000)^(-2.45));
-         Q25= (49500*(UpstreamArea)^(0.411))*((6182.81/1000)^(-2.51));
+         Q2= 4150*((UpstreamArea)^(0.553))*((8000/1000)^(-2.45));
+         Q25= (49500*(UpstreamArea)^(0.411))*((8000/1000)^(-2.51));
     elseif(regionID == '7')  % Utah Region 7
         QP80 = 0.18205*((UpstreamArea)^(0.7938));
         Q2= 18.4*((UpstreamArea)^(0.630));
