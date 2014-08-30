@@ -95,9 +95,9 @@ elseif oCC_EX > 5 && oCC_EX <=15 % The existing Frequent Capacity Areas
          end
     end 
 elseif oCC_EX > 15 && oCC_EX <=50 % The existing Pervasive Capacity Areas
-        if oPC_Prob <= HighConflict % 25% Low conflict potential
+        if oPC_Prob <= IntConflict % 25% Low conflict potential
             fCR = 'Low Hanging Fruit - Potential Restoration/Conservation Zone';
-        elseif oPC_Prob > HighConflict % Interm
+        else 
             fCR = 'Living with Beaver (High Source)';
         end  
 else
