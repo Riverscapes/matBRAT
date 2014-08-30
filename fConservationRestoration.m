@@ -31,21 +31,22 @@ end
 
 %% Start the Logic Train
 LowConflict = 0.25; % The low conflict probablity threshold
+IntConflict = 0.50; % Intermediate conflict probabilty
 HighConflict = 0.75; % The high conflict probablity threshold
 
 if oCC_EX == 0 % Deal with the existing None capacity areas first
     % Either going to be Unsuitable (Anthropogenic or Natural) or Long-Term
     % Possiblity. What differentiates it is basically potential and
     % probability of conflict.
-    if oCC_PT > 5 % i.e. Potential is > 5 dams/km
-        if oPC_Prob < LowConflict 
+    if oCC_PT > 5 % i.e. Historic is > 5 dams/km
+        if oPC_Prob <= IntConflict 
             fCR = 'Long-Term Possibility Restoration Zone';
         else % Must be limited by current landuse?
             fCR = 'Unsuitable: Anthropogenically Limited';
         end
        
     else % Now figure out whether anthropogenic or naturally limiting
-        if oVC_PT > 1 % If the vegetation potential was good enough to support some activty
+        if oCC_PT > 1 % If the vegetation potential was good enough to support some activty
             fCR = 'Unsuitable: Anthropogenically Limited';
         else
             fCR = 'Unsuitable: Naturally Limited';
