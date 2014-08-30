@@ -53,26 +53,19 @@ if oCC_EX == 0 % Deal with the existing None capacity areas first
         end
     end
 elseif oCC_EX > 0 && oCC_EX <=1 % The existing Rare Capacity Areas
-    if oCC_PT > 5 && oCC_PT <= 15 % Is there better potential?
-        if oPC_Prob <= LowConflict % Low conflict potential
-            fCR = 'Long-Term Possibility Restoration Zone';
-        elseif oPC_Prob > LowConflict && oPC_Prob <= HighConflict % Intermediate Potential... Requires input?
-            fCR = 'Living with Beaver (Low Source)';
-        elseif oPC_Prob > HighConflict 
-            fCR = 'Unsuitable: Anthropogenically Limited';
-        end
-    elseif oCC_PT > 15 % Or really great potential
-         if oPC_Prob <= LowConflict 
+    if oCC_PT > 5  % Was it better historically?
+        if oPC_Prob <= IntConflict % Less than intermediate conflict potential
             fCR = 'Quick Return Restoration Zone';
-        elseif oPC_Prob > LowConflict && oPC_Prob <= HighConflict % Intermediate Potential... Requires input?
+        else
             fCR = 'Living with Beaver (Low Source)';
-        elseif oPC_Prob > HighConflict 
-            fCR = 'Unsuitable: Anthropogenically Limited';
         end
-    else % Just not great potential
-        fCR = 'Unsuitable: Naturally Limited';
-        if oVC_PT > 1 % If the vegetation potential was good enough to support some activty
-            fCR = 'Unsuitable: Anthropogenically Limited';
+    else % Just not great historically either 
+        if oCC_PT > 1 % If the historic capacity was good enough to support some activty
+            if oPC_Prob <= IntConflict
+                fCR = 'Long Term Possiblity Restoration Zone';
+            else
+              	fCR = 'Living with Beaver (Low Source)'; 
+            end
         else
             fCR = 'Unsuitable: Naturally Limited';            
         end    
