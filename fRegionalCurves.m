@@ -29,10 +29,10 @@ try
          QP80 = (0.0000000000040244*(UpstreamArea)^(0.2355))*(7079.69^(2.5456))*((17.6+0.001)^(1.5444));
          Q2= 1.52*(UpstreamArea)^0.677*(1.39^(7.07969));   
          Q25= (19.7*(UpstreamArea)^(0.547))*((1.21)^(7.07969));
-    elseif(regionID == '2') % Utah Region 2
+    elseif(regionID == '2') % Utah Region 2 (40.0 was used instead of 23.23 to increase stream power in central wasatch to reflect on-the-ground conditions) 
          QP80 = (6.726*10^(-37))*((UpstreamArea)^0.6244)*(5707.02^9.3200);
-         Q2= 0.585*(UpstreamArea)^0.847*(1.07^22.23);
-         Q25= (4*(UpstreamArea)^(0.661))*1.06^(22.23);
+         Q2= 0.585*(UpstreamArea)^0.847*(1.07^40.0);
+         Q25= (4*(UpstreamArea)^(0.661))*1.06^(40.0);
     elseif(regionID == '3')  % Utah Region 3
          QP80 = 0.012712*((UpstreamArea)^0.8789)*(10^(0.0539*11.71)); 
          Q2= 14.5*(UpstreamArea)^0.328;
@@ -45,10 +45,10 @@ try
          QP80 = 0.012712*((UpstreamArea)^(0.8789))*(10^(0.0539*19.42));
          Q2= 4.32*((UpstreamArea)^(0.623))*(4^(0.503));
          Q25= (28.8*(UpstreamArea)^(0.538))*((4)^(0.352));
-    elseif(regionID == '6')  % Utah Region 6
+    elseif(regionID == '6')  % Utah Region 6 (8000 was used instead of 6182.81 to decrease stream power to reflect on-the-ground conditions)
          QP80 = 0.27139*((UpstreamArea)^(0.5124));
-         Q2= 4150*((UpstreamArea)^(0.553))*((6182.81/1000)^(-2.45));
-         Q25= (49500*(UpstreamArea)^(0.411))*((6182.81/1000)^(-2.51));
+         Q2= 4150*((UpstreamArea)^(0.553))*((8000/1000)^(-2.45));
+         Q25= (49500*(UpstreamArea)^(0.411))*((8000/1000)^(-2.51));
     elseif(regionID == '7')  % Utah Region 7
         QP80 = 0.18205*((UpstreamArea)^(0.7938));
         Q2= 18.4*((UpstreamArea)^(0.630));

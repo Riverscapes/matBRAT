@@ -8,8 +8,8 @@
 %  Contributors:
 %       Wally MacFarlane, Joe Wheaton, Martha Jensen, Konrad Hafen
 %                                                                
-%                        Version 2.0.2                           
-%                  Updated on 5/22/2014 by JMW                   
+%                        Version 2.0.3                           
+%                  Updated on 6/16/2014 by MLJ                   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 
@@ -27,7 +27,7 @@
 % 5: iGeo_Length  Segment Length  - Derived from NHD 24K geometry; typically 250 m [meters]	
 % 6: iGeo_Slope	  Segment Slope - Derived from elevations and segment length [percent slope - dimensionless]
 % 7: iveg_VT100EX Existing Vegetation Type Beaver Suitability Adjacent to Stream - Classified from existing LANDFIRE as Beaver Vegetation Suitability using Zonal Stat Average within 100 m buffer [Suitability Value between 0 & 4]	
-% 8: iveg_VT30EX  Existing Vegetation Type Beaver Suitability Near Stream
+% 8: iveg_VT30EX  Existing Vegetation Type Beaver Suitability Near Stream(Riparian)
 % 9: iveg_VT100PT	Potential Vegetation Type Beaver Suitability Adjacent to Stream
 % 10: iveg_VT30PT  	Potential Vegetation Type Beaver Suitability Near Stream
 % 11: iGeo_DA	 Upslope Drainage Area - SqMi - Derived from flow accumulation calculated on 10m NHD DEM [square miles]
@@ -113,10 +113,11 @@ if (length(slpTooBigAdd) > 0)
 end
 
 
-%% AREA (use DrainMI)
+%% AREA (iGeo_DA)
 iGeo_DA = data(:,11);
 % Convert from km2 to mi2
 iGeo_DA = 0.3861021585424458*iGeo_DA;
+
 
 
 %% VEG INPUTS
@@ -168,7 +169,7 @@ regionButton = inputdlg('Enter exact region number for regional curves(see code 
 fprintf('Estimating discharge and stream power...\n')
 h = waitbar(0,'Estimating Q & Stream Power from regional curves...');
 for b=1:length(data); 
-    [iHyd_QLow(b), iHyd_Q2(b), iHyd_Q25(b)]= fRegionalCurves((char(regionButton)),iGeo_DA(b));
+     [iHyd_QLow(b), iHyd_Q2(b), iHyd_Q25(b)]= fRegionalCurves((char(regionButton)),iGeo_DA(b));
 % Calculate Unit Stream Power (Watts)
     %  CFS to Unit Stream Power (Watts)
     %  Flow (CFS) is converted to CMS by multiplying by 0.028316846592
@@ -204,8 +205,24 @@ iPC_RoadX = data(:,13);
 iPC_RoadAdj = data(:,14);
 iPC_RR = data(:,15);
 iPC_Canal = data(:,16);
-% iPC_LU = data(:,15);
-% iPC_Own = data(:,16);
+iPC_LU = data(:,17);
+iPC_Own = data(:,18);
+
+%% Dam COUNT INPUT (OPTIONAL)
+temp = size(data);
+cols = temp(2);
+if cols == 18
+    boolDamCount = 0;
+    fprintf('No Dam Capacity; %f column in dataset\n', (cols));
+else
+    boolDamCount = 1;
+    fprintf('Dam Capacity; %f columns in dataset\n', (cols));
+        
+end
+
+if boolDamCount
+   e_DamCt = data(:,19);
+end
 
 %% BEAVER VEG CAPACITY FIS
 fprintf('Estimating capacity estimates based on vegetation FIS...\n')
@@ -223,9 +240,10 @@ clear b;
 
 fprintf('Done running vegetation FIS...\n')
 %% BEAVER COMBINED FIS
-
+fprintf('Estimating capacity estimates based on combined FIS...\n')
  oCC_EX = zeros(length(data),1);
  oCC_PT = zeros(length(data),1);
+
 
 h = waitbar(0,'Running combined capacity FIS Model...');
 for b=1:length(data);    
@@ -242,15 +260,33 @@ for b=1:length(data);
        oCC_PT(b) = oVC_PT(b);
    end
 
-   if iGeo_DA(b) > 3860; %Max Drainage Area (sq. mi.) for beaver presence
+   if char(regionButton) == '6' && iGeo_DA(b) > 3860 ; %Max Drainage Area (sq. mi.) for beaver dam presence in Region 6
        oCC_EX(b) = 0;
        oCC_PT(b) = 0;
-   end 
-   waitbar(b/(length(data)))
-end
+   elseif iGeo_DA(b) > 3860; %Max Drainage Area (sq. mi.) for beaver dam presence in all other Regions
+       oCC_EX(b) = 0;
+       oCC_PT(b) = 0;
+   end
+
+   
+   % Headwater Fix 
+    if oCC_EX(b) >1 && oCC_EX(b)<5 %if existing capacity occasional 
+        if iHyd_SP2(b)<250 %if stream power low
+            oCC_EX(b) = oCC_EX(b)+10; %Bump occasional to frequent
+        end
+    end
+    if oCC_PT(b) >1 && oCC_PT(b)<5 %if potential capacity occasional 
+        if iHyd_SP2(b)<250 %if stream power low
+            oCC_PT(b) = oCC_PT(b)+10; %Bump occasional to frequent
+        end
+    end
+    waitbar(b/(length(data)))
+ end
 close(h);
-clear b;
+clear b;      
+ 
 fprintf('Done running combined Beaver Capacity FIS...\n')
+
 %% POTENTIAL CONFLICT FIS
 oPC_Prob = zeros(length(data),1);
 
@@ -260,13 +296,12 @@ if strcmp(conflictButton,'Yes')
     % Add a status bar, while running model
     h = waitbar(0,'Running Potential Conflict Model...');
     for b=1:length(data);
-        oPC_Prob(b) = fConflictPotential(iPC_UDotX(b),iPC_RoadX(b),iPC_Canal(b),iPC_RR(b),iPC_RoadAdj(b));
+        oPC_Prob(b) = fConflictPotential(iPC_UDotX(b),iPC_RoadX(b),iPC_RoadAdj(b),iPC_Canal(b),iPC_RR(b), iPC_LU(b), iPC_Own(b));
         waitbar(b/(length(data)))
     end
     close(h);
     clear b;
 end
-
 
 %% Potential Beaver Restoration and Conservation
 
@@ -294,6 +329,14 @@ clear i;
 mCC_EX_Ct = zeros(length(data),1);
 mCC_PT_Ct = zeros(length(data),1);
 mCC_EXtoPT = zeros(length(data),1);
+
+if boolDamCount
+    e_DamDens = zeros(length(data),1); % if Dam Count data is included in the data, add these columns
+    e_DamPcC = zeros(length(data),1);
+    oVC_DamPcC = zeros(length(data),1);
+end
+   
+
 % Add a status bar, while running model
 h = waitbar(0,'Calculating Metrics...');
 for k = 1:(length(data))
@@ -304,6 +347,11 @@ for k = 1:(length(data))
     else
         mCC_EXtoPT(k) = 0;
     end
+    if boolDamCount
+       e_DamDens (k) = e_DamCt (k)/((iGeo_Length(k))/1000); % a metric of the existing dams/km
+       e_DamPcC (k) = e_DamCt(k)/oCC_EX(k); % a metric of the existing dam count divided by the exiting capacity - output is a probability between 0 and 1
+       oVC_DamPcC (k) = e_DamCt(k)/oVC_EX(k);% a metric comparing the vegetation capacity to the dam count - probability between 0 and 1
+    end
     waitbar(k/(length(data)))
 end
 close(h)
@@ -313,14 +361,24 @@ clear k;
 %------Write the BRAT Results to an CSV file format-----
 
 fid3 = fopen(outfilename, 'w');    %create output file to write to
-fprintf(fid3, 'FID,iGeo_ElMin,iGeo_ElMax,iGeo_ElBeg,iGeo_ElEnd,iGeo_Length,iGeo_Slope,iveg_VT100EX,iveg_VT30EX,iveg_VT100PT,iveg_VT30PT,iGeo_DA,iHyd_QLow,iHyd_Q2,iHyd_Q25,iHyd_SPLow,iHyd_SP2,iHyd_SP25,oVC_EX,oVC_PT,oCC_EX,oCC_PT,mCC_EX_Ct,mCC_PT_Ct,mCC_EXtoPT,iPC_UDotX,iPC_RoadX,iPC_RoadAdj,iPC_RR,iPC_Canal,oPC_Prob,oPBRC\n'); % write header
+
+if boolDamCount
+    fprintf(fid3, 'FID,iGeo_ElMin,iGeo_ElMax,iGeo_ElBeg,iGeo_ElEnd,iGeo_Length,iGeo_Slope,iveg_VT100EX,iveg_VT30EX,iveg_VT100PT,iveg_VT30PT,iGeo_DA,iHyd_QLow,iHyd_Q2,iHyd_Q25,iHyd_SPLow,iHyd_SP2,iHyd_SP25,oVC_EX,oVC_PT,oCC_EX,oCC_PT,mCC_EX_Ct,mCC_PT_Ct,mCC_EXtoPT,iPC_UDotX,iPC_RoadX,iPC_RoadAdj,iPC_RR,iPC_Canal,iPC_LU,iPC_Own,oPC_Prob,oPBRC,e_DamCt,e_DamDens,e_DamPcC, oVC_DamPcC\n'); % write header
+else 
+    fprintf(fid3, 'FID,iGeo_ElMin,iGeo_ElMax,iGeo_ElBeg,iGeo_ElEnd,iGeo_Length,iGeo_Slope,iveg_VT100EX,iveg_VT30EX,iveg_VT100PT,iveg_VT30PT,iGeo_DA,iHyd_QLow,iHyd_Q2,iHyd_Q25,iHyd_SPLow,iHyd_SP2,iHyd_SP25,oVC_EX,oVC_PT,oCC_EX,oCC_PT,mCC_EX_Ct,mCC_PT_Ct,mCC_EXtoPT,iPC_UDotX,iPC_RoadX,iPC_RoadAdj,iPC_RR,iPC_Canal,iPC_LU,iPC_Own,oPC_Prob,oPBRC\n'); % write header
+end
 % write out data
 h = waitbar(0,'Writing output to disc...');
 % Make sure first FID is 0 and they progress sequentially! Otherwise change
 % counter to FIDStart =1
 FIDstart = 0;
 for j=1:(length(oCC_EX));                                                      
-    fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j),mCC_PT_Ct(j),mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j), oPC_Prob(j), char(oPBRC(j)));
+    if boolDamCount
+        fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s,%f,%f,%f,%f\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j), mCC_PT_Ct(j), mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j),iPC_LU(j),iPC_Own(j), oPC_Prob(j),char(oPBRC(j)), e_DamCt(j),e_DamDens(j),e_DamPcC(j),oVC_DamPcC(j));
+    else 
+        fprintf(fid3,'%u,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n', FIDstart, iGeo_ElMin(j), iGeo_ElMax(j), iGeo_ElBeg(j), iGeo_ElEnd(j) ,iGeo_Length(j), iGeo_Slope(j), iveg_VT100EX(j), iveg_VT30EX(j), iveg_VT100PT(j), iveg_VT30PT(j), iGeo_DA(j), iHyd_QLow(j), iHyd_Q2(j), iHyd_Q25(j), iHyd_SPLow(j), iHyd_SP2(j), iHyd_SP25(j), oVC_EX(j), oVC_PT(j), oCC_EX(j), oCC_PT(j), mCC_EX_Ct(j), mCC_PT_Ct(j), mCC_EXtoPT(j), iPC_UDotX(j), iPC_RoadX(j), iPC_RoadAdj(j), iPC_RR(j), iPC_Canal(j),iPC_LU(j),iPC_Own(j), oPC_Prob(j), char(oPBRC(j))); 
+         
+   end
     waitbar(j/(length(oCC_EX)))
     FIDstart = FIDstart +1;
 end
