@@ -81,20 +81,18 @@ elseif oCC_EX > 1 && oCC_EX <=5 % The existing Occasional Capacity Areas
             fCR = 'Living with Beaver (Low Source)';
      end 
 elseif oCC_EX > 5 && oCC_EX <=15 % The existing Frequent Capacity Areas
-     if oCC_PT > 15  % Is there better potential?
-        if oPC_Prob <= LowConflict % 25% Low conflict potential
+     if oCC_PT > 15  % Was there even better potential historically?
+        if oPC_Prob <= IntConflict % Lower conflict potential
             fCR = 'Quick Return Restoration Zone';
-        elseif oPC_Prob > LowConflict && oPC_Prob <= HighConflict % Intermediate Potential... Requires input?
+        else 
             fCR = 'Living with Beaver (High Source)';
-        elseif oPC_Prob > HighConflict % Interm
-            fCR = 'Unsuitable: Anthropogenically Limited';
         end
-    elseif oCC_PT <= 15 % Or not so great potential improvement
-         if oPC_Prob <= HighConflict % 25% Low conflict potential
+     else % Or not much better historically
+         if oPC_Prob <= IntConflict % 25% Low conflict potential
                 fCR = 'Low Hanging Fruit - Potential Restoration/Conservation Zone';
-        elseif oPC_Prob >  HighConflict 
+         else 
             fCR = 'Living with Beaver (High Source)';
-        end
+         end
     end 
 elseif oCC_EX > 15 && oCC_EX <=50 % The existing Pervasive Capacity Areas
         if oPC_Prob <= HighConflict % 25% Low conflict potential
