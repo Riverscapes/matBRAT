@@ -11,18 +11,7 @@ This repository is for the BRAT Matlab scripts.
 2.0.3
 
 
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-Matlab, ArcGIS Spatial Analyst, 3D Anlayst & Matlab Fuzzy Logic Toolbox
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-
 ### Who do I talk to? ###
 
 * Repo owner or admin: Joe.Wheaton@usu.edu
-* Other community or team contact: Wally.MacFarlane@usu.edu 
+* Other community or team contact: Wally.MacFarlane@usu.edu
