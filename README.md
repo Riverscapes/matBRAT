@@ -1,31 +1,28 @@
 # BRAT README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+*BRAT* is the [Beaver Restoration Assessment Tool](http://brat.joewheaton.org). The model is a stream network model, that is geared towards building appropriate expectation management with respect to the dam building activities of beaver. The model is intended to help resource managers plan and prioritize where beaver may build dams naturally, what the capacity of the streamscape is to support their dam buliding activity, predict where the potential for human-beaver conflicts may arise, and highlight where and where-not beaver make sense as a conservation or restoration tool. 
+
+Currently, the model consists of a set of manual ArcGIS geoprocessing steps and workflow, and the model itself is a series of Matlab scripts (provided here). Full documentation on how to implement the geoprocessing and use this source code is available at the [BRAT website](http://brat.joewheaton.org).
 
 ### What is this repository for? ###
-
-* Quick summary
+This repository is for the BRAT Matlab scripts.
 
 * Version
-2.0.2
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+2.0.3
+
 
 ### How do I get set up? ###
 
 * Summary of set up
 * Configuration
 * Dependencies
+Matlab, ArcGIS Spatial Analyst, 3D Anlayst & Matlab Fuzzy Logic Toolbox
 * Database configuration
 * How to run tests
 * Deployment instructions
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
 
 ### Who do I talk to? ###
 
 * Repo owner or admin: Joe.Wheaton@usu.edu
-* Other community or team contact: Wally.MacFarlane@usu.edu
+* Other community or team contact: Wally.MacFarlane@usu.edu 
