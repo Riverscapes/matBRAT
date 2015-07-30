@@ -26,8 +26,8 @@ Name='AnnualPeakStreamPower'
 Range=[0 1000000]
 NumMFs=4
 MF1='DamPersists':'trimf',[0 1000 1200]
-MF2='OccasionalBreach':'trimf',[1000 1200 1400]
-MF3='OccasionalBlowout':'trimf',[1400 2000 2400]
+MF2='OccasionalBreach':'trimf',[1000 1200 1600]
+MF3='OccasionalBlowout':'trimf',[1200 1600 2400]
 MF4='Blowout':'trapmf',[2000 2400 1000000 1000000]
 
 [Input3]
