@@ -24,12 +24,12 @@
 
 ![NHD]({{ site.url }}/assets/Images/NHD.png)
 
-* [Landfire](http://www.landfire.gov/) for *Vegetation Type raster data
+* [Landfire](http://www.landfire.gov/) for *Vegetation Type raster data*
   * Download both Us_120evt (existing vegetation type) and us_120bps (potential vegetation type)
 
 Note: The potential vegetation layer (biophysical settings (BpS)) represents the vegetation that may have been dominant on the landscape prior to Euro-American settlement and is based on both the current biophysical environment and an approximation of the historical disturbance regime. 
 
-[USGS Digital Elevation (DEM) data](http://ned.usgs.gov/)* for Digital Elevation Model (DEM)*
+[USGS Digital Elevation (DEM) data](http://ned.usgs.gov/) *for Digital Elevation Model (DEM)*
 * Download USGS NED  10 m DEM data[USGS StreamStats](http://streamstats.usgs.gov/) or [USGS National Streamflow Statistics](http://water.usgs.gov/osw/programs/nss/pubs.html) for:
   * Baseflow regional regression equations (e.g. PQ80 for month with lowest flows)
   * Highflow regional regression equations (e.g. Q2 - 2 year recurrence interval peak flow)
