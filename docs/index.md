@@ -9,3 +9,6 @@ The Beaver Restoration Assessment Tool (matBRAT) - v 1.0 to 2.03
 - [7. Formatting BRAT Input Data]({{ site.baseurl }}/matBRAT/7-FormattingBRATInputData)
 - [8. Running BRAT Model]({{ site.baseurl }}/matBRAT/8-RunningBRATModel)
 - [9. Finalizing BRAT Outputs]({{ site.baseurl }}/matBRAT/9-FinalizingBRATOutputs)
+
+[Workshops]({{ site.baseurl }}/Workshops)
+
