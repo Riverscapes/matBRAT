@@ -149,4 +149,4 @@ Final 30m buffer with missing segments
 
 ------
 
-<- [Back to Step 1]({{ site.baseurl }}/Documentation/matBRAT/1-InputData)        [Ahead to Step 3]({{ site.baseurl }}/Documentation/matBRAT/3-VegetationClassification) ->
+<- [Back to Step 1]({{ site.baseurl }}/matBRAT/1-InputData)        [Ahead to Step 3]({{ site.baseurl }}/matBRAT/3-VegetationClassification) ->

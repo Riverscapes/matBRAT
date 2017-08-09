@@ -30,5 +30,5 @@ These resulting shapefiles are the **final data** and are featured on the Dam-bu
 
 [![final_FIS_map]({{ site.baseurl }}/assets/Images/final_FIS_map.png)]({{ site.baseurl }}/assets/Images/hr/final_FIS_map.png)
 
-[Back to Step 8]({{ site.baseurl }}/Documentation/matBRAT/8-RunningBRATModel)
+[Back to Step 8]({{ site.baseurl }}/matBRAT/8-RunningBRATModel)
 

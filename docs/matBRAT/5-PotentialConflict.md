@@ -71,4 +71,4 @@ Remember to repeat this step for each of the potential conflict layers that you 
 
 ​                                          
 
-​                                                                         <- [Back to Step 4]({{ site.baseurl }}/Documentation/matBRAT/4-CalcUpstream)       [Ahead to Step 6]({{ site.baseurl }}/Documentation/matBRAT/6-TransferingAttributes) ->
+​                                                                         <- [Back to Step 4]({{ site.baseurl }}/matBRAT/4-CalcUpstream)       [Ahead to Step 6]({{ site.baseurl }}/matBRAT/6-TransferingAttributes) ->

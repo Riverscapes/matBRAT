@@ -63,4 +63,4 @@ Below we illustrate how you can use Zonal Statistics to clip and average your cl
 
 
 
-<- [Back to Step 2]({{ site.baseurl }}/Documentation/matBRAT/2-StreamNetwork)        [Ahead to Step 4]({{ site.baseurl }}/Documentation/matBRAT/4-CalcUpstream) ->
+<- [Back to Step 2]({{ site.baseurl }}/matBRAT/2-StreamNetwork)        [Ahead to Step 4]({{ site.baseurl }}/matBRAT/4-CalcUpstream) ->
