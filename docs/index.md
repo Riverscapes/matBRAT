@@ -1,3 +1,7 @@
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+[![BRAT_Banner_Web]({{ site.baseurl }}/assets/Images//BRAT_Banner_Web.png)]({{ site.baseurl }})
+
 The Beaver Restoration Assessment Tool (matBRAT) - v 1.0 to 2.03
 
 - [1. Input Data Capture]({{ site.baseurl }}/matBRAT/1-InputData)
